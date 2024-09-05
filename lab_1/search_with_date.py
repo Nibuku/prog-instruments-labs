@@ -1,9 +1,8 @@
-from datetime import date
 import datetime
 import re
 import os
 from threading import Thread
-from typing import List
+
 
 
 def day(this_day:str) -> datetime:
