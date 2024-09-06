@@ -34,7 +34,7 @@ def search_in_all(date: datetime) -> None:
 
 
 def search_in_year(date: datetime) -> None:
-    flag = ''
+    flag = ""
     for row in os.listdir("2"):
         file = open(os.path.join("2", row), "r")
         flag = search(file, date)
@@ -45,7 +45,7 @@ def search_in_year(date: datetime) -> None:
 
 
 def search_in_week(date: datetime) -> None:
-    flag = ''
+    flag = ""
     for row in os.listdir("3"):
         file = open(os.path.join("3", row), "r")
         flag = search(file, date)
@@ -80,7 +80,7 @@ def search_in_week_fast(date: datetime) -> str:
 
 
 def search_in_data_and_date(date: datetime) -> str:
-    result = ''
+    result = ""
     count = 0
     flag = 0
     file_date = open(os.path.join("1", "file_with_date.csv"), "r")
@@ -104,7 +104,7 @@ def search_in_data_and_date(date: datetime) -> str:
                 file_data.close
                 return result
         file_data.close
-    result = 'None'
+    result = "None"
     return result
     
 

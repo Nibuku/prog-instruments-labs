@@ -5,7 +5,7 @@ HEADERS = {
     "Accept": "*/*",
     "User-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
 }
-URL = 'https://www.gismeteo.ru/diary/4618/'
+URL = "https://www.gismeteo.ru/diary/4618/"
 LAST_YEAR = 2022
 LAST_MONTH = 10
 DATABASE = "dataset.csv"
@@ -30,7 +30,7 @@ def clean_content(parameters: list) -> list:
 
 
 def get_content(html: str) -> list:
-    soup = bs(html, 'html.parser')
+    soup = bs(html, "html.parser")
     all_number = []
 
     for item in soup.find_all("td"):
@@ -41,7 +41,7 @@ def get_content(html: str) -> list:
     return all_number
 
 
-out_file = open(DATABASE, 'w+')
+out_file = open(DATABASE, "w+")
 first_year = 2008
 first_month = 1
 out_file.write(
@@ -52,7 +52,7 @@ out_file.write(
      + "Night temperature,"
      + "Night pressure,"
      + "Night wind" +
-     '\n'
+     "\n"
 )
 while first_year <= LAST_YEAR:
     while first_month <= 12:
@@ -71,7 +71,7 @@ while first_year <= LAST_YEAR:
             if first_month < 10:
                 month = "0" + str(first_month)
             else: month = str(first_month)
-            out_file.write(str(first_year) + '-' + month + '-' + day + ',')
+            out_file.write(str(first_year) + "-" + month + "-" + day + ",")
             out_file.write(
                 main_list[index+1]
                 + ","
@@ -84,7 +84,7 @@ while first_year <= LAST_YEAR:
                 + main_list[index + 5]
                 + ","
                 + main_list[index + 6]
-                + '\n'
+                + "\n"
             )
             index += 7
         first_month += 1
