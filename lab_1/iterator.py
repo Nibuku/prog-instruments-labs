@@ -2,6 +2,7 @@ class Iterator:
     """
     Iterator that reads lines from the specified file and allows iteration over them.
     """
+    
     def __init__(self, name_of_file: str) -> None:
         """
         Initializes the Iterator with the file path and reads the file into a list.

@@ -96,7 +96,7 @@ while first_year <= LAST_YEAR:
                 month = str(first_month)
             out_file.write(str(first_year) + "-" + month + "-" + day + ",")
             out_file.write(
-                main_list[index+1]
+                main_list[index + 1]
                 + ","
                 + main_list[index + 2]
                 + ","

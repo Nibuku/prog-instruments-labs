@@ -4,7 +4,7 @@ import os
 from threading import Thread
 
 
-def day(this_day:str) -> datetime:
+def day(this_day: str) -> datetime:
     """
     Converts a date string in the format "YYYY-MM-DD" to a datetime.date object.
     parametrs:
@@ -17,7 +17,7 @@ def day(this_day:str) -> datetime:
     month = month[0].replace("-", "")
     return datetime.date(int(year[0]), int(month), int(day[0]))
 
-    
+
 def search(file: Thread, date: datetime) -> str:
     """
     Searches for a specific date in the file.
@@ -159,7 +159,6 @@ def search_in_data_and_date(date: datetime) -> str:
         file_data.close
     result = "None"
     return result
-    
 
 
 def next(count: int) -> int:
