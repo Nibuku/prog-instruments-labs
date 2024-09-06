@@ -12,11 +12,25 @@ DATABASE = "dataset.csv"
 
 
 def get_html(url: str) -> requests.Response:
+    """
+    Sends an HTTP GET request to the specified URL.
+    parametrs:
+    url: URL to send the request to.
+    return:
+    req: requests.Response containing the server's response to the HTTP request.
+    """
     req = requests.get(url, headers=HEADERS)
     return req
 
 
 def clean_content(parameters: list) -> list:
+    """
+    Filters out specific elements from a list based on their position.
+    parametrs:
+    parameters: list of items to be filtered.
+    return: 
+    new_weather: new filtered list
+    """
     new_weather = []
     count = 0
     for number in parameters:
@@ -30,6 +44,13 @@ def clean_content(parameters: list) -> list:
 
 
 def get_content(html: str) -> list:
+    """
+    Parses the HTML content from <td> elements with a specific class.
+    parametrs:
+    html: string with HTML.
+    return:
+    all_number: list of text from <td> elements that contain the class 'first'.
+    """
     soup = bs(html, "html.parser")
     all_number = []
 
