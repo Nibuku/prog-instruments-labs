@@ -12,12 +12,12 @@ LAST_MONTH = 10
 DATABASE = "dataset.csv"
 
 
-def get_html(url):
+def get_html(url: str) -> requests.Response:
     req = requests.get(url, headers=HEADERS)
     return req
 
 
-def clean_content(parameters):
+def clean_content(parameters: list) -> list:
     new_weather = []
     count = 0
     for number in parameters:
@@ -30,7 +30,7 @@ def clean_content(parameters):
     return new_weather
 
 
-def get_content(html):
+def get_content(html: str) -> list:
     soup = bs(html, 'html.parser')
     all_number = []
 

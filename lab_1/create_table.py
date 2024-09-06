@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def grafics(df: pd):
+def grafics(df: pd.DataFrame) -> None:
     df["Number"] = pd.to_datetime(df["Number"], format="%Y-%m-%d")
     fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(40, 8))
     plt.subplots_adjust(wspace=0.3, hspace=0.3)
@@ -20,7 +20,7 @@ def grafics(df: pd):
     plt.show()
 
 
-def grafics_date(df: pd, month: int, year: int):
+def grafics_date(df: pd.DataFrame, month: int, year: int) -> None:
     fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(40, 8))
     tmp_df = df.loc[(df["Number"].dt.year == year) & (df["Number"].dt.month == month)]
     plt.subplots_adjust(wspace=0.5, hspace=0.5)
@@ -49,16 +49,16 @@ def grafics_date(df: pd, month: int, year: int):
     plt.show()
 
 
-def temperature_filter(df: pd, temp: float):
+def temperature_filter(df: pd.DataFrame, temp: float) -> pd.DataFrame:
     return df[df["Day temperature"] >= temp]
 
 
-def number_filter(df: pd, start: str, end: str):
+def number_filter(df: pd.DataFrame, start: str, end: str) -> pd.DataFrame:
     df["Number"] = pd.to_datetime(df["Number"], format="%Y-%m-%d")
     return df.loc[(df["Number"] >= start) & (df["Number"] <= end)]
 
 
-def groupby_date(df: pd):
+def groupby_date(df: pd.DataFrame) -> pd.DataFrame:
     df["Number"] = pd.to_datetime(df["Number"], format="%Y-%m-%d")
     return df.groupby(df["Number"].dt.month)[
         "Day temperature",
@@ -68,7 +68,7 @@ def groupby_date(df: pd):
     ].mean()
 
 
-def statistics(df: pd) -> None:
+def statistics(df: pd.DataFrame) -> None:
     print(
         df["Day temperature"].describe(),
         df["Night temperature"].describe(),
@@ -77,7 +77,7 @@ def statistics(df: pd) -> None:
     )
 
 
-def datafrem() -> pd:
+def datafrem() -> pd.DataFrame:
     df = pd.read_csv("dataset.csv", sep=",")
     df["Number"] = pd.to_datetime(df["Number"], format="%Y-%m-%d")
     df.fillna(
