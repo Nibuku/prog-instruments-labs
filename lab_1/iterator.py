@@ -1,4 +1,5 @@
 class Iterator:
+    
     def __init__(self, name_of_file):
         self.name_of_file = name_of_file
         self.counter = 0

@@ -10,6 +10,8 @@ URL = 'https://www.gismeteo.ru/diary/4618/'
 LAST_YEAR=2022
 LAST_MONTH=10
 DATABASE="dataset.csv"
+
+
 def get_html(url):
     req = requests.get(url, headers=HEADERS)
     return req
@@ -38,6 +40,7 @@ def get_content(html):
 
     all_number = clean_content(all_number) 
     return all_number
+
 
 out_file = open(DATABASE, 'w+')
 first_year = 2008
