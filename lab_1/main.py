@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup as bs
 HEADERS = {
     "Accept": "*/*",
     "User-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
-
 }
 URL = 'https://www.gismeteo.ru/diary/4618/'
 LAST_YEAR = 2022
@@ -45,7 +44,16 @@ def get_content(html: str) -> list:
 out_file = open(DATABASE, 'w+')
 first_year = 2008
 first_month = 1
-out_file.write("Number," + "Day temperature," + "Day pressure," + "Day wind," + "Night temperature," + "Night pressure," + "Night wind" + '\n')
+out_file.write(
+    "Number,"
+     + "Day temperature,"
+     + "Day pressure,"
+     + "Day wind,"
+     + "Night temperature,"
+     + "Night pressure,"
+     + "Night wind" +
+     '\n'
+)
 while first_year <= LAST_YEAR:
     while first_month <= 12:
         if first_month == LAST_MONTH and first_year == LAST_YEAR:
@@ -64,7 +72,20 @@ while first_year <= LAST_YEAR:
                 month = "0" + str(first_month)
             else: month = str(first_month)
             out_file.write(str(first_year) + '-' + month + '-' + day + ',')
-            out_file.write(main_list[index+1] + "," + main_list[index + 2] + "," + main_list[index + 3] + "," + main_list[index + 4] + "," + main_list[index + 5] + "," + main_list[index + 6] + '\n')
+            out_file.write(
+                main_list[index+1]
+                + ","
+                + main_list[index + 2]
+                + ","
+                + main_list[index + 3]
+                + ","
+                + main_list[index + 4]
+                + ","
+                + main_list[index + 5]
+                + ","
+                + main_list[index + 6]
+                + '\n'
+            )
             index += 7
         first_month += 1
     first_year += 1
