@@ -51,8 +51,8 @@ out_file.write(
      + "Day wind,"
      + "Night temperature,"
      + "Night pressure,"
-     + "Night wind" +
-     "\n"
+     + "Night wind"
+     + "\n"
 )
 while first_year <= LAST_YEAR:
     while first_month <= 12:
@@ -67,10 +67,12 @@ while first_year <= LAST_YEAR:
             day = ""
             if int(main_list[index]) < 10:
                 day = "0" + main_list[index]
-            else: day = main_list[index]
+            else: 
+                day = main_list[index]
             if first_month < 10:
                 month = "0" + str(first_month)
-            else: month = str(first_month)
+            else: 
+                month = str(first_month)
             out_file.write(str(first_year) + "-" + month + "-" + day + ",")
             out_file.write(
                 main_list[index+1]
