@@ -7,9 +7,9 @@ HEADERS = {
 
 }
 URL = 'https://www.gismeteo.ru/diary/4618/'
-LAST_YEAR=2022
-LAST_MONTH=10
-DATABASE="dataset.csv"
+LAST_YEAR = 2022
+LAST_MONTH = 10
+DATABASE = "dataset.csv"
 
 
 def get_html(url):
@@ -45,28 +45,28 @@ def get_content(html):
 out_file = open(DATABASE, 'w+')
 first_year = 2008
 first_month = 1
-out_file.write("Number,"+"Day temperature,"+ "Day pressure,"+"Day wind,"+"Night temperature,"+ "Night pressure,"+ "Night wind"+'\n')
-while first_year<=LAST_YEAR:
-    while first_month<=12:
+out_file.write("Number," + "Day temperature," + "Day pressure," + "Day wind," + "Night temperature," + "Night pressure," + "Night wind" + '\n')
+while first_year <= LAST_YEAR:
+    while first_month <= 12:
         if first_month == LAST_MONTH and first_year == LAST_YEAR:
             break
-        full_url = URL +str(first_year)+ "/" + str(first_month)+ "/"
+        full_url = URL + str(first_year) + "/" + str(first_month) + "/"
         html = get_html(full_url)
         main_list = get_content(html.text)
         index = 0
-        while index<len(main_list):
+        while index < len(main_list):
             month = ""
             day = ""
-            if int(main_list[index])<10:
-                day = "0"+main_list[index]
+            if int(main_list[index]) < 10:
+                day = "0" + main_list[index]
             else: day = main_list[index]
-            if first_month<10:
-                month = "0"+str(first_month)
+            if first_month < 10:
+                month = "0" + str(first_month)
             else: month = str(first_month)
-            out_file.write(str(first_year)+'-'+month+'-'+day +',')
-            out_file.write(main_list[index+1]+","+ main_list[index+2]+","+ main_list[index+3]+","+ main_list[index+4]+","+main_list[index+5]+","+main_list[index+6]+'\n')
-            index+=7
-        first_month+=1
-    first_year+=1
+            out_file.write(str(first_year) + '-' + month + '-' + day + ',')
+            out_file.write(main_list[index+1] + "," + main_list[index + 2] + "," + main_list[index + 3] + "," + main_list[index + 4] + "," + main_list[index + 5] + "," + main_list[index + 6] + '\n')
+            index += 7
+        first_month += 1
+    first_year += 1
     first_month = 1
 out_file.close()
