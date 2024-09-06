@@ -98,13 +98,3 @@ def datafrem() -> pd.DataFrame:
 
 if __name__ == "__main__":
     df = datafrem()
-    start = "2020-10-08"
-    end = "2021-11-17"
-    # print(df)
-    # print(number_filter(df, start, end))
-    # print(groupby_date(df))
-    # grafics(df)
-    #grafics_date(df, 7, 2012)
-    #print(df.loc[2800])
-    # temperature_filter(df, 21)
-    # statistics(df)

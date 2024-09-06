@@ -4,7 +4,6 @@ import os
 from threading import Thread
 
 
-
 def day(this_day:str) -> datetime:
     year = re.search(r"\d{4}", this_day)
     day = re.search(r"\b\d{2}", this_day)
@@ -80,19 +79,6 @@ def search_in_week_fast(date: datetime) -> str:
     return "None"
 
 
-#def search_in_week(date: datetime) -> str:
- #   result = ""
-  #  flag = 0
-   # for row in os.listdir("3"):
-    #    file = open(os.path.join("3", row), "r")
-     #   flag = search(file, date)
-      #  file.close
-       # if flag == 0:
-        #    break
-    #if flag == 1:
-     #   return "None"
-
-
 def search_in_data_and_date(date: datetime) -> str:
     result = ''
     count = 0
@@ -132,7 +118,3 @@ def next(count: int) -> int:
     file.close
     count += 1
     return count
-
-#date = datetime.date(2013,1,1)
-##print(search_in_data_and_date(date))
-#print(type(search_in_year(date)))
