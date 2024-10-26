@@ -1,5 +1,6 @@
-import re
 import os
+import re
+
 import pandas as pd
 
 import checksum as check
@@ -24,13 +25,15 @@ def open_csv(path: str) -> pd.DataFrame:
     :param path: путь до исходого csv-файла
     :return: данные в виде DataFrame
     """
-    data = pd.read_csv(path,
+    data = pd.read_csv(
+        path,
         encoding="utf-16",
         sep=";",
     )
     return data
 
-def check_row_valid(row: pd.Series)-> bool:
+
+def check_row_valid(row: pd.Series) -> bool:
     """
     Проверяет на валидность одну строку DataFrame.
     Если все данные подходят соответствующим регулярным выражениям, возвращает True.
@@ -39,12 +42,13 @@ def check_row_valid(row: pd.Series)-> bool:
     :return: результат проверки на валидность
     """
     for name_column, value in zip(PATTERNS.keys(), row):
-        pattern=PATTERNS[name_column]
+        pattern = PATTERNS[name_column]
         if not re.search(pattern, str(value)):
             return False
     return True
 
-def get_invalid_index(path: str)->list:
+
+def get_invalid_index(path: str) -> list:
     """
     Получает путь до исходного csv-файла с данными. Вызывает функцию
     open_csv() и создает объект DataFrame, после проверяет каждую его строку с помощью
@@ -52,15 +56,16 @@ def get_invalid_index(path: str)->list:
     :param path: путь до исходного csv-файла
     :return invalid_index: список строк с невалидным индексом
     """
-    rows=open_csv(path)
-    invalid_index=list()
+    rows = open_csv(path)
+    invalid_index = list()
     for index, row in rows.iterrows():
         if not check_row_valid(row):
             invalid_index.append(index)
     return invalid_index
 
+
 if __name__ == "__main__":
-    list_index=get_invalid_index(os.path.join("prog-instruments-labs", "lab_3", "65.csv"))
+    list_index = get_invalid_index(
+        os.path.join("prog-instruments-labs", "lab_3", "65.csv")
+    )
     check.serialize_result(65, check.calculate_checksum(list_index))
-    
-    

@@ -1,6 +1,6 @@
-import os
-import json
 import hashlib
+import json
+import os
 from typing import List
 
 """
@@ -24,7 +24,7 @@ def calculate_checksum(row_numbers: List[int]) -> str:
     :return: md5 хеш для проверки через github action
     """
     row_numbers.sort()
-    return hashlib.md5(json.dumps(row_numbers).encode('utf-8')).hexdigest()
+    return hashlib.md5(json.dumps(row_numbers).encode("utf-8")).hexdigest()
 
 
 def serialize_result(variant: int, checksum: str) -> None:
@@ -39,10 +39,8 @@ def serialize_result(variant: int, checksum: str) -> None:
     :param variant: номер вашего варианта
     :param checksum: контрольная сумма, вычисленная через calculate_checksum()
     """
-    result_data = {
-        "variant": str(variant),
-        "checksum": checksum
-    }
-    with open(os.path.join("prog-instruments-labs", "lab_3", "result.json"), 'w') as json_file:
+    result_data = {"variant": str(variant), "checksum": checksum}
+    with open(
+        os.path.join("prog-instruments-labs", "lab_3", "result.json"), "w"
+    ) as json_file:
         json.dump(result_data, json_file, indent=2)
-
