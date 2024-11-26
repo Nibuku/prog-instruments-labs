@@ -17,15 +17,24 @@ def day(this_day: str) -> datetime:
     this_day: string in the format "YYYY-MM-DD"
     return: datetime.date object
     """
-    try:
-        year = re.search(r"\d{4}", this_day)
-        day = re.search(r"\b\d{2}", this_day)
-        month = re.search(r"\-\d{2}\-", this_day)
-        month = month[0].replace("-", "")
-        logger.info(f"Data found:")
-        return datetime.date(int(year[0]), int(month), int(day[0]))
-    except Exception as ex:
-        logger.error(f"Data not found: {ex.message}\n{ex.args}\n")
+
+    year = re.search(r"\d{4}", this_day)
+    day = re.search(r"\b\d{2}", this_day)
+    month = re.search(r"\-\d{2}\-", this_day)
+    month = month[0].replace("-", "")
+    logger.info(
+        "Data found- Year: {}, Month: {}, Day: {}",
+        year.group(0),
+        month.group(0),
+        day.group(0),
+    )
+    if not (year and day and month):
+        logger.info(
+            "Date components not found in string: '{}'. Ensure the format is 'YYYY-MM-DD'.",
+            this_day,
+        )
+        return None
+    return datetime.date(int(year[0]), int(month), int(day[0]))
 
 
 def search(file: Thread, date: datetime) -> str:
@@ -38,14 +47,16 @@ def search(file: Thread, date: datetime) -> str:
     """
     for row in file:
         new_date = re.search(r"\d{2}\-\d{2}\-\d{4}", row)
+        if not new_date:
+            logger.info("Date format not found in row: {}", row)
         year = re.search(r"\d{4}", new_date[0])
         day = re.search(r"\b\d{2}", new_date[0])
         month = re.search(r"\-\d{2}\-", new_date[0])
         month = month[0].replace("-", "")
         if date == datetime.date(int(year[0]), int(month), int(day[0])):
-            logger.info(f"The object was found by the specified date")
+            logger.info("The object was found by the specified date: {}", date)
             return str(row)
-    logger.info(f"The object was not found by the specified date")
+    logger.info("The object was not found by the specified date: {}", date)
     return "None"
 
 
@@ -61,9 +72,13 @@ def search_in_all(date: datetime) -> None:
         flag = search(file, date)
         file.close()
     except Exception as ex:
-        logger.error(f"Error while working with the file: {ex.message}\n{ex.args}\n")
+        logger.error(
+            "Error while working with the file 'dataset.csv'. Exception: {exception}, Args: {args}",
+            ex,
+            ex.args,
+        )
     if flag == 1:
-        logger.info(f"The object was not found by the specified date")
+        logger.info("The object was not found by the specified date: {}", date)
 
 
 def search_in_year(date: datetime) -> None:
@@ -83,10 +98,13 @@ def search_in_year(date: datetime) -> None:
             file.close()
         except Exception as ex:
             logger.error(
-                f"Error while working with the file: {ex.message}\n{ex.args}\n"
+                "Error while working with the file '{}'. Exception: {exception}, Args: {args}",
+                row,
+                ex,
+                ex.args,
             )
-        if flag != "None":
-            return flag
+        if flag == "None":
+            logger.info("The date was not found in any files in the directory '2'")
     return flag
 
 
@@ -107,12 +125,16 @@ def search_in_week(date: datetime) -> None:
             file.close()
         except Exception as ex:
             logger.error(
-                f"Error while working with the file: {ex.message}\n{ex.args}\n"
+                "Error while working with the file '{}'. Exception: {exception}, Args: {args}",
+                row,
+                ex,
+                ex.args,
             )
         if flag != "":
-            return flag
+            logger.info("Found the date in file: {}", row)
     if flag == "":
-        return flag
+        logger.info("The date was not found in any files in the directory '3'")
+    return flag
 
 
 def date_in_str(str: str) -> None:
@@ -146,9 +168,17 @@ def search_in_week_fast(date: datetime) -> str:
         first_date = date_in_str(first_date[0])
         last_date = date_in_str(last_date)
         if date >= first_date and date <= last_date:
-            file = open(os.path.join("3", row), "r")
-            return search(file, date)
-    logger.info(f"Object was not found")
+            try:
+                file = open(os.path.join("3", row), "r")
+                return search(file, date)
+            except Exception as ex:
+                logger.error(
+                    "Error while reading the file '{}'. Exception: {exception}, Args: {args}",
+                    row,
+                    ex,
+                    ex.args,
+                )
+    logger.info("Object was not found")
     return "None"
 
 
@@ -173,11 +203,15 @@ def search_in_data_and_date(date: datetime) -> str:
             month = month[0].replace("-", "")
             if date == datetime.date(int(year[0]), int(month), int(day[0])):
                 flag = 1
-                logger.info(f"Object found")
+                logger.info("Object found in 'file_with_date.csv'")
                 break
         file_date.close()
     except Exception as ex:
-        logger.error(f"Error while working with the file: {ex.message}\n{ex.args}\n")
+        logger.error(
+            "Error while working with the file 'file_with_date.csv'. Exception: {exception}, Args: {args}",
+            ex,
+            ex.args,
+        )
     if flag == 1:
         try:
             file_data = open(os.path.join("1", "file_with_data.csv"), "r")
@@ -190,10 +224,11 @@ def search_in_data_and_date(date: datetime) -> str:
             file_data.close()
         except Exception as ex:
             logger.error(
-                f"Error while working with the file: {ex.message}\n{ex.args}\n"
+                "Error while working with the file 'file_with_data.csv'. Exception: {exception}, Args: {args}",
+                ex,
+                ex.args,
             )
-    result = "None"
-    return result
+    return None
 
 
 def next(count: int) -> int:
@@ -208,9 +243,13 @@ def next(count: int) -> int:
         data = []
         for row in file:
             data.append(row)
-        print(data[count])
+        logger.info("Printed line at index {}: {}", count, data[count])
         file.close()
     except Exception as ex:
-        logger.error(f"Error while working with the file: {ex.message}\n{ex.args}\n")
+        logger.error(
+            "Error while working with the file 'dataset.csv'. Exception: {exception}, Args: {args}",
+            ex,
+            ex.args,
+        )
     count += 1
     return count
