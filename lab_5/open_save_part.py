@@ -14,7 +14,7 @@ def write_data(path: str, data: bytes) -> None:
         with open(path, "wb") as f:
             f.write(data)
     except Exception as ex:
-        logging.error(f"File writing error: {ex.message}\n{ex.args}\n")
+        logging.error(f"File writing error: {ex}\n{ex.args}\n")
 
 
 def read_file(path: str) -> bytes:
@@ -30,4 +30,4 @@ def read_file(path: str) -> bytes:
             data = f.read()
         return data
     except Exception as ex:
-        logging.error(f"File reading error: {ex.message}\n{ex.args}\n")
+        logging.error(f"File reading error: {ex}\n{ex.args}\n")
